@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  black:
+  Format:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +26,7 @@ jobs:
         cd backend
         pipenv run black --check -l 79 .
 
-  flake8:
+  Lint:
     needs: black
     runs-on: ubuntu-latest
 
