@@ -11,6 +11,8 @@ RUN pip install pipenv
 RUN pipenv install --deploy --system
 # Copy the application code to the working directory
 COPY . .
+# Run the migrations
+RUN aerich init -t app.config.TORTOISE_ORM
 # Expose the port on which the application will run
 EXPOSE 8000
 # Run the application

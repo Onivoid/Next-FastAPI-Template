@@ -1,4 +1,3 @@
-import os
 from .config import TORTOISE_ORM
 from dotenv import load_dotenv
 from fastapi import FastAPI
@@ -11,14 +10,6 @@ from .graphql.resolvers.user import Query as UserQuery, Mutation as UserMutation
 load_dotenv("../config/.env")
 
 app = FastAPI()
-
-register_tortoise(
-    app,
-    db_url=os.getenv("DATABASE_URL"),
-    modules={"models": ["app.models.user"]},
-    generate_schemas=True,
-    add_exception_handlers=True,
-)
 
 
 @strawberry.type

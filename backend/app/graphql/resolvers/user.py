@@ -18,7 +18,7 @@ from jwt import (
     encode as jwt_encode,
 )
 from datetime import datetime, timedelta
-from app.utils import verify_token
+from app.utils.jwt_utils import verify_token
 
 load_dotenv()
 

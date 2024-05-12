@@ -37,6 +37,7 @@ aerich = "*"
 strawberry-graphql = "*"
 pyjwt = "*"
 black = "*"
+flake8 = "*"
 
 [dev-packages]
 
