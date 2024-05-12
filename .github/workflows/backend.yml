@@ -27,7 +27,7 @@ jobs:
         pipenv run black --check -l 79 .
 
   lint:
-    needs: black
+    needs: format
     runs-on: ubuntu-latest
 
     steps:
