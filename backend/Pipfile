@@ -36,6 +36,7 @@ websockets = "==12.0"
 aerich = "*"
 strawberry-graphql = "*"
 pyjwt = "*"
+black = "*"
 
 [dev-packages]
 
