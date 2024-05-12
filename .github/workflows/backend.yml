@@ -25,8 +25,8 @@ jobs:
     - name: Check formatting with black
       run: |
         cd backend
-        pipenv run black --check -l 79 backend
+        pipenv run black --check -l 79 .
     - name: Lint with flake8
       run: |
         cd backend
-        pipenv run flake8 backend --count --select=E9,F63,F7,F82 --show-source --statistics
+        pipenv run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
