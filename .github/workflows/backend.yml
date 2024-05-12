@@ -20,6 +20,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pipenv
         cd backend
+        pipenv lock
         pipenv install --dev
     - name: Check formatting with black
       run: |
