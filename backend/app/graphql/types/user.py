@@ -2,11 +2,13 @@ import strawberry
 from typing import Optional
 from enum import Enum
 
+
 @strawberry.enum
 class Role(Enum):
-    ADMIN = 'admin'
-    TESTER = 'tester'
-    USER = 'user'
+    ADMIN = "admin"
+    TESTER = "tester"
+    USER = "user"
+
 
 @strawberry.type
 class User:
@@ -18,9 +20,11 @@ class User:
     role: Role
     token: Optional[str]
 
+
 @strawberry.type
 class PublicUser:
     username: str
+
 
 @strawberry.type
 class AuthenticatedUser:
@@ -29,9 +33,11 @@ class AuthenticatedUser:
     discord_id: Optional[int]
     token: str
 
+
 @strawberry.type
 class PublicUserList:
     users: list[PublicUser]
+
 
 @strawberry.type
 class AdminUserList:

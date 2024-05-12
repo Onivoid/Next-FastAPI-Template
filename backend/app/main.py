@@ -8,36 +8,39 @@ from strawberry.asgi import GraphQL
 import strawberry
 from .graphql.resolvers.user import Query as UserQuery, Mutation as UserMutation
 
-load_dotenv('../config/.env')
+load_dotenv("../config/.env")
 
 app = FastAPI()
 
 register_tortoise(
     app,
-    db_url=os.getenv('DATABASE_URL'),
-    modules={'models': ['app.models.user']},
+    db_url=os.getenv("DATABASE_URL"),
+    modules={"models": ["app.models.user"]},
     generate_schemas=True,
     add_exception_handlers=True,
 )
+
 
 @strawberry.type
 class Query(UserQuery):
     pass
 
+
 @strawberry.type
 class Mutation(UserMutation):
     pass
 
+
 schema = strawberry.Schema(query=Query, mutation=Mutation)
 
-app.add_route('/graphql', GraphQL(schema=schema))
+app.add_route("/graphql", GraphQL(schema=schema))
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*'],
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=['*'],
-    allow_headers=['*'],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 register_tortoise(
