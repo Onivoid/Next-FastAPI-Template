@@ -21,7 +21,7 @@ initall: init init-db
 runall: migrate upgrade
 
 format:
-	black .
+	black . -l 79
 
 lint: 
 	flake8 .

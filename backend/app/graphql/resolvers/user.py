@@ -50,7 +50,9 @@ class Mutation:
     ) -> Union[AuthenticatedUser, Error]:
         try:
             user = await UserModel.get(username=username)
-            if bcrypt.checkpw(password.encode("utf8"), user.password.encode("utf8")):
+            if bcrypt.checkpw(
+                password.encode("utf8"), user.password.encode("utf8")
+            ):
                 payload = {
                     "user_id": user.id,
                     "username": user.username,
@@ -58,7 +60,9 @@ class Mutation:
                     "discord_id": user.discord_id,
                     "exp": datetime.now() + timedelta(hours=12),
                 }
-                token = jwt_encode(payload=payload, key=SECRET_KEY, algorithm=ALGORITHM)
+                token = jwt_encode(
+                    payload=payload, key=SECRET_KEY, algorithm=ALGORITHM
+                )
                 user.token = token
                 await user.save()
                 return AuthenticatedUser(
@@ -76,7 +80,9 @@ class Mutation:
 @strawberry.type
 class Query:
     @strawberry.field
-    async def users(self, info: strawberry.private) -> Union[PublicUserList, Error]:
+    async def users(
+        self, info: strawberry.private
+    ) -> Union[PublicUserList, Error]:
         request: HTTPConnection = info.context["request"]
         token = request.headers.get("Authorization")
         payload = verify_token(token)

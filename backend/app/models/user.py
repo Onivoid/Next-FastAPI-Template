@@ -21,7 +21,9 @@ class User(Model):
     email = fields.CharField(max_length=255, unique=True)
     discord_id = fields.IntField(null=True)
     password = fields.CharField(max_length=255, null=True)
-    role = fields.CharField(max_length=255, choices=Role.choices(), default=Role.USER)
+    role = fields.CharField(
+        max_length=255, choices=Role.choices(), default=Role.USER
+    )
     token = fields.CharField(max_length=500, null=True)
 
 

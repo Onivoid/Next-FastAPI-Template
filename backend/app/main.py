@@ -5,7 +5,10 @@ from tortoise.contrib.fastapi import register_tortoise
 from fastapi.middleware.cors import CORSMiddleware
 from strawberry.asgi import GraphQL
 import strawberry
-from .graphql.resolvers.user import Query as UserQuery, Mutation as UserMutation
+from .graphql.resolvers.user import (
+    Query as UserQuery,
+    Mutation as UserMutation,
+)
 
 load_dotenv("../config/.env")
 
