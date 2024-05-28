@@ -100,9 +100,7 @@ class Query:
         payload = verify_token(token)
         if isinstance(payload, str):
             return Error(message=payload)
-        user_id = payload.get("user_id")
         user_role = payload.get("role")
-        adminUser = await UserModel.get(id=user_id)
 
         if not user_role == "admin":
             return Error(message="Unauthorized")
