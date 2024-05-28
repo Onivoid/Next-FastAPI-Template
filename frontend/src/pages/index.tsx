@@ -48,7 +48,6 @@ export default function Home() {
             height={37}
             priority
           />
-          <p>Test CI</p>
         </div>
 
         <div className={styles.grid}>
