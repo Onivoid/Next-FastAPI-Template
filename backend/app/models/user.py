@@ -24,7 +24,6 @@ class User(Model):
     role = fields.CharField(
         max_length=255, choices=Role.choices(), default=Role.USER
     )
-    token = fields.CharField(max_length=500, null=True)
 
 
 @pre_save(User)

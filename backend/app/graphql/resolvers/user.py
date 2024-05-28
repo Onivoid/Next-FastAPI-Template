@@ -55,16 +55,12 @@ class Mutation:
             ):
                 payload = {
                     "user_id": user.id,
-                    "username": user.username,
-                    "email": user.email,
-                    "discord_id": user.discord_id,
+                    "role": user.role,
                     "exp": datetime.now() + timedelta(hours=12),
                 }
                 token = jwt_encode(
                     payload=payload, key=SECRET_KEY, algorithm=ALGORITHM
                 )
-                user.token = token
-                await user.save()
                 return AuthenticatedUser(
                     username=user.username,
                     discord_id=user.discord_id,
@@ -104,10 +100,11 @@ class Query:
         payload = verify_token(token)
         if isinstance(payload, str):
             return Error(message=payload)
-        user_id = payload.get["user_id"]
+        user_id = payload.get("user_id")
+        user_role = payload.get("role")
         adminUser = await UserModel.get(id=user_id)
 
-        if not adminUser.role == "admin":
+        if not user_role == "admin":
             return Error(message="Unauthorized")
 
         users = await UserModel.all()

@@ -16,9 +16,7 @@ class User:
     username: str
     email: str
     discord_id: Optional[int]
-    password: str
     role: Role
-    token: Optional[str]
 
 
 @strawberry.type

@@ -18,7 +18,7 @@ init-db:
 
 initall: init init-db
 
-runall: migrate upgrade
+runall: upgrade migrate
 
 format:
 	black . -l 79
