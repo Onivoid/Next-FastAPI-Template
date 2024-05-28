@@ -2,6 +2,6 @@ format:
 	pnpx prettier --write .
 
 lint:
-	pnpx next lint .
+	pnpm run lint
 
 check: format lint
