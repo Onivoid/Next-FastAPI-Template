@@ -76,6 +76,39 @@ class Mutation:
 @strawberry.type
 class Query:
     @strawberry.field
+    async def me(self, info: strawberry.private) -> Union[PublicUser, Error]:
+        request: HTTPConnection = info.context["request"]
+        token = request.headers.get("Authorization")
+        payload = verify_token(token)
+
+        if isinstance(payload, str):
+            return Error(message=payload)
+
+        user_id = payload.get("user_id")
+        try:
+            user = await UserModel.get(id=user_id)
+            return PublicUser(username=user.username)
+        except DoesNotExist:
+            return Error(message="User not found")
+
+    @strawberry.field
+    async def user(
+        self, info: strawberry.private, user_id: str
+    ) -> Union[PublicUser, Error]:
+        request: HTTPConnection = info.context["request"]
+        token = request.headers.get("Authorization")
+        payload = verify_token(token)
+
+        if isinstance(payload, str):
+            return Error(message=payload)
+
+        try:
+            user = await UserModel.get(id=user_id)
+            return PublicUser(username=user.username)
+        except DoesNotExist:
+            return Error(message="User not found")
+
+    @strawberry.field
     async def users(
         self, info: strawberry.private
     ) -> Union[PublicUserList, Error]:
@@ -118,3 +151,29 @@ class Query:
                 for user in users
             ]
         )
+
+    @strawberry.field
+    async def admin_user(
+        self, info: strawberry.private, user_id: str
+    ) -> Union[User, Error]:
+        request: HTTPConnection = info.context["request"]
+        token = request.headers.get("Authorization")
+        payload = verify_token(token)
+        if isinstance(payload, str):
+            return Error(message=payload)
+        user_role = payload.get("role")
+
+        if not user_role == "admin":
+            return Error(message="Unauthorized")
+
+        try:
+            user = await UserModel.get(id=user_id)
+            return User(
+                id=str(user.id),
+                username=user.username,
+                email=user.email,
+                discord_id=user.discord_id,
+                role=user.role,
+            )
+        except DoesNotExist:
+            return Error(message="User not found")
