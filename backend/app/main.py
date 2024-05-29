@@ -28,10 +28,13 @@ class Mutation(UserMutation):
 schema = strawberry.Schema(query=Query, mutation=Mutation)
 
 app.add_route("/graphql", GraphQL(schema=schema))
-
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

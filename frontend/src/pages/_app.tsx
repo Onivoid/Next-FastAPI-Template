@@ -11,6 +11,7 @@ import { useStore } from "@/services/global/store";
 export const client = new ApolloClient({
     uri: process.env.NEXT_PUBLIC_BACKEND_URL,
     cache: new InMemoryCache(),
+    credentials: "include",
 });
 
 export default function App({ Component, pageProps }: AppProps) {
