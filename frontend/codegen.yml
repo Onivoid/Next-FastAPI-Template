@@ -12,7 +12,6 @@ generates:
       extension: .ts
       folder: '../../hooks'
     plugins:
-      - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
     config:
