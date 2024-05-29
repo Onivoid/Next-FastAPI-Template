@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a999fcdff6e9897ed41429460b33173b2b3a0c5fbcc58b11671f59aa550ac4d7"
+            "sha256": "170a758e8dcd5c9f3a6410c05591b05447fe17929517804181b7d7176aec4e0c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -571,18 +571,17 @@
                 "sha256:13d429aa93a61dc40bf503e8c801db1f1bca3dc706b10ef2434a36123568f044",
                 "sha256:90a671733cfb35771d8cc605e0b679d23b992f8dcfad48cc60b38cb29aeb7080"
             ],
-            "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==0.36.3"
         },
         "strawberry-graphql": {
             "hashes": [
-                "sha256:33c9e949ddc91e7af4b4f1ae6ab2fa544622697f4bdb96b430d1b254783be634",
-                "sha256:d627192e4626fd1df3a51796df6246e7c4499e87a8eaa9f2682c5d8a913f2663"
+                "sha256:1805426fbe7d4871440e8eaf2a6168d77f3361e8e5cca6224b31aebc9aea3125",
+                "sha256:7370380698692ab0e59a46da9f96fc9bd62d857e1867bb0cdfe899aff5a7c22d"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8' and python_version < '4.0'",
-            "version": "==0.229.0"
+            "version": "==0.232.2"
         },
         "tomlkit": {
             "hashes": [
@@ -612,12 +611,12 @@
         },
         "uvicorn": {
             "hashes": [
-                "sha256:2c2aac7ff4f4365c206fd773a39bf4ebd1047c238f8b8268ad996829323473de",
-                "sha256:6a69214c0b6a087462412670b3ef21224fa48cae0e452b5883e8e8bdfdd11dd0"
+                "sha256:78fa0b5f56abb8562024a59041caeb555c86e48d0efdd23c3fe7de7a4075bdab",
+                "sha256:f678dec4fa3a39706bbf49b9ec5fc40049d42418716cea52b53f07828a60aa37"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==0.29.0"
+            "version": "==0.30.0"
         },
         "watchfiles": {
             "hashes": [
@@ -863,11 +862,11 @@
         },
         "platformdirs": {
             "hashes": [
-                "sha256:031cd18d4ec63ec53e82dceaac0417d218a6863f7745dfcc9efe7793b7039bdf",
-                "sha256:17d5a1161b3fd67b390023cb2d3b026bbd40abde6fdb052dfbd3a29c3ba22ee1"
+                "sha256:2d7a1657e36a80ea911db832a8a6ece5ee53d8de21edd5cc5879af6530b1bfee",
+                "sha256:38b7b51f512eed9e84a22788b4bce1de17c0adb134d6becb09836e37d8654cd3"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==4.2.1"
+            "version": "==4.2.2"
         },
         "pycodestyle": {
             "hashes": [

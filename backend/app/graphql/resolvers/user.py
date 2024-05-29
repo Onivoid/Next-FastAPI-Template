@@ -48,6 +48,7 @@ class Mutation:
     async def login(
         self, info, username: str, password: str
     ) -> Union[AuthenticatedUser, Error]:
+        response: HTTPConnection = info.context["response"]
         try:
             user = await UserModel.get(username=username)
             if bcrypt.checkpw(
@@ -55,12 +56,14 @@ class Mutation:
             ):
                 payload = {
                     "user_id": user.id,
+                    "username": user.username,
                     "role": user.role,
                     "exp": datetime.now() + timedelta(hours=12),
                 }
                 token = jwt_encode(
                     payload=payload, key=SECRET_KEY, algorithm=ALGORITHM
                 )
+                response.set_cookie(key="token", value=token)
                 return AuthenticatedUser(
                     username=user.username,
                     discord_id=user.discord_id,
