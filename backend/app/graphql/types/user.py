@@ -29,7 +29,7 @@ class AuthenticatedUser:
     username: str
     email: str
     discord_id: Optional[int]
-    token: str
+    role: Role
 
 
 @strawberry.type

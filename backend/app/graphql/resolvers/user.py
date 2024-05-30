@@ -31,16 +31,29 @@ class Mutation:
     @strawberry.field
     async def register(
         self, info, username: str, email: str, password: str
-    ) -> Union[PublicUser, Error]:
+    ) -> Union[AuthenticatedUser, Error]:
         try:
             user = await UserModel.create(
                 username=username,
                 email=email,
                 password=password,
             )
-            return PublicUser(
-                username=user.username,
+            payload = {
+                "user_id": user.id,
+                "username": user.username,
+                "role": user.role,
+                "exp": datetime.now() + timedelta(hours=12),
+            }
+            token = jwt_encode(
+                payload=payload, key=SECRET_KEY, algorithm=ALGORITHM
             )
+            info.context["response"].set_cookie(key="token", value=token)
+            return AuthenticatedUser(
+                    username=user.username,
+                    discord_id=user.discord_id,
+                    email=user.email,
+                    role=user.role,
+                )
         except Exception as e:
             return Error(message=str(e))
 
@@ -67,7 +80,7 @@ class Mutation:
                     username=user.username,
                     discord_id=user.discord_id,
                     email=user.email,
-                    token=token,
+                    role=user.role,
                 )
             else:
                 return Error(message="Invalid password")
@@ -78,9 +91,9 @@ class Mutation:
 @strawberry.type
 class Query:
     @strawberry.field
-    async def me(self, info: strawberry.private) -> Union[PublicUser, Error]:
+    async def me(self, info: strawberry.private) -> Union[AuthenticatedUser, Error]:
         request: HTTPConnection = info.context["request"]
-        token = request.headers.get("Authorization")
+        token = request.cookies.get("token")
         payload = verify_token(token)
 
         if isinstance(payload, str):
@@ -89,7 +102,12 @@ class Query:
         user_id = payload.get("user_id")
         try:
             user = await UserModel.get(id=user_id)
-            return PublicUser(username=user.username)
+            return AuthenticatedUser(
+                username=user.username,
+                email=user.email,
+                discord_id=user.discord_id,
+                role=user.role,
+            )
         except DoesNotExist:
             return Error(message="User not found")
 
@@ -98,7 +116,7 @@ class Query:
         self, info: strawberry.private, user_id: str
     ) -> Union[PublicUser, Error]:
         request: HTTPConnection = info.context["request"]
-        token = request.headers.get("Authorization")
+        token = request.cookie.get("token")
         payload = verify_token(token)
 
         if isinstance(payload, str):
@@ -115,7 +133,7 @@ class Query:
         self, info: strawberry.private
     ) -> Union[PublicUserList, Error]:
         request: HTTPConnection = info.context["request"]
-        token = request.headers.get("Authorization")
+        token = request.cookie.get("token")
         payload = verify_token(token)
 
         if isinstance(payload, str):
@@ -131,7 +149,7 @@ class Query:
         self, info: strawberry.private
     ) -> Union[AdminUserList, Error]:
         request: HTTPConnection = info.context["request"]
-        token = request.headers.get("Authorization")
+        token = request.cookie.get("token")
         payload = verify_token(token)
         if isinstance(payload, str):
             return Error(message=payload)
@@ -159,7 +177,7 @@ class Query:
         self, info: strawberry.private, user_id: str
     ) -> Union[User, Error]:
         request: HTTPConnection = info.context["request"]
-        token = request.headers.get("Authorization")
+        token = request.cookie.get("token")
         payload = verify_token(token)
         if isinstance(payload, str):
             return Error(message=payload)
