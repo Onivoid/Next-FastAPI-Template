@@ -8,9 +8,13 @@ import {
 import { useLoginMutation } from "@/services/graphql/hooks/UsersMutations";
 import { useStore } from "@/services/global/store";
 
-export default function LoginComponent(
-    { setNotifications }
-    : { setNotifications: (notifications: {message: string, type: string}[]) => void}){
+export default function LoginComponent({
+    setNotifications,
+}: {
+    setNotifications: (
+        notifications: { message: string; type: string }[],
+    ) => void;
+}) {
     const [loginMutation, { data, loading, error }] = useLoginMutation();
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -23,25 +27,39 @@ export default function LoginComponent(
 
     useEffect(() => {
         if (data === null || data === undefined) return;
-        if ((data.login as AuthenticatedUser).__typename !== "AuthenticatedUser"){
-            setNotifications([{message: (data.login as Error).message, type: "error"}]);
+        if (
+            (data.login as AuthenticatedUser).__typename !== "AuthenticatedUser"
+        ) {
+            setNotifications([
+                { message: (data.login as Error).message, type: "error" },
+            ]);
             return;
         } else {
             let userData = data.login as AuthenticatedUser;
-            if (userData.role !== "ADMIN"){
-                setNotifications([{message: "Vous n'êtes pas Administrateur.", type: "warning"}]);
+            if (userData.role !== "ADMIN") {
+                setNotifications([
+                    {
+                        message: "Vous n'êtes pas Administrateur.",
+                        type: "warning",
+                    },
+                ]);
                 return;
             }
-            setNotifications([{message: "Vous êtes connecté.", type: "success"}]);
+            setNotifications([
+                { message: "Vous êtes connecté.", type: "success" },
+            ]);
             useStore.setState({ user: userData });
         }
-    }, [data]);
+    }, [data, setNotifications]);
 
     return (
         <>
             <div className={Style.cardContainer}>
                 <div className={Style.card}>
-                    <form onSubmit={handleSubmit} className={Style.formContainer}>
+                    <form
+                        onSubmit={handleSubmit}
+                        className={Style.formContainer}
+                    >
                         <p className={Style.formHeader}>Login</p>
                         <div className={Style.field}>
                             <i className="pi pi-user"></i>

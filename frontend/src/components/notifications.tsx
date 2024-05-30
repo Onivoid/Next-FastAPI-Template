@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 export function notify(
     toast: React.MutableRefObject<Toast | null>,
     message: string,
-    type: string
+    type: string,
 ) {
     if (!toast.current) return;
     if (type === "success") {

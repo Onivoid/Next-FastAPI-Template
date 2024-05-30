@@ -6,7 +6,9 @@ import { Notifications } from "@/components/notifications";
 
 export default function Admin() {
     const pageTitle = process.env.NEXT_PUBLIC_APP_NAME;
-    const [notifications, setNotifications] = useState<{message: string, type: string}[]>([]);
+    const [notifications, setNotifications] = useState<
+        { message: string; type: string }[]
+    >([]);
     return (
         <>
             <Head>
@@ -18,9 +20,9 @@ export default function Admin() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Notifications notifications={notifications}/>
+            <Notifications notifications={notifications} />
             <div className={Style.container}>
-                <LoginComponent setNotifications={setNotifications}/>
+                <LoginComponent setNotifications={setNotifications} />
             </div>
         </>
     );
