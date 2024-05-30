@@ -62,10 +62,7 @@ class Mutation:
                 token = jwt_encode(
                     payload=payload, key=SECRET_KEY, algorithm=ALGORITHM
                 )
-                info.context["response"].set_cookie(
-                    key="token", 
-                    value=token
-                )
+                info.context["response"].set_cookie(key="token", value=token)
                 return AuthenticatedUser(
                     username=user.username,
                     discord_id=user.discord_id,
