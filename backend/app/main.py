@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from tortoise.contrib.fastapi import register_tortoise
 from fastapi.middleware.cors import CORSMiddleware
 from strawberry.asgi import GraphQL
+import os
 import strawberry
 from .graphql.resolvers.user import (
     Query as UserQuery,
@@ -28,10 +29,9 @@ class Mutation(UserMutation):
 schema = strawberry.Schema(query=Query, mutation=Mutation)
 
 app.add_route("/graphql", GraphQL(schema=schema))
-origins = [
-    "http://localhost",
-    "http://localhost:3000",
-]
+
+origins = os.getenv("CORS_ORIGINS").split(",")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
