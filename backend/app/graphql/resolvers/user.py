@@ -49,11 +49,11 @@ class Mutation:
             )
             info.context["response"].set_cookie(key="token", value=token)
             return AuthenticatedUser(
-                    username=user.username,
-                    discord_id=user.discord_id,
-                    email=user.email,
-                    role=user.role,
-                )
+                username=user.username,
+                discord_id=user.discord_id,
+                email=user.email,
+                role=user.role,
+            )
         except Exception as e:
             return Error(message=str(e))
 
@@ -91,7 +91,9 @@ class Mutation:
 @strawberry.type
 class Query:
     @strawberry.field
-    async def me(self, info: strawberry.private) -> Union[AuthenticatedUser, Error]:
+    async def me(
+        self, info: strawberry.private
+    ) -> Union[AuthenticatedUser, Error]:
         request: HTTPConnection = info.context["request"]
         token = request.cookies.get("token")
         payload = verify_token(token)
