@@ -35,9 +35,11 @@ export const GET_USER_BY_ID = gql`
 export const GET_ME = gql`
     query GetMe {
         me {
-            ... on PublicUser {
-                __typename
+            ... on AuthenticatedUser {
+                discordId
+                email
                 username
+                role
             }
             ... on Error {
                 __typename

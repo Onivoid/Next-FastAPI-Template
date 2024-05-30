@@ -1,10 +1,5 @@
 import { create } from "zustand";
-
-type AuthenticatedUser = {
-    token: string | undefined;
-    name: string | undefined;
-    isAdmin: boolean | undefined;
-};
+import { AuthenticatedUser } from "@/services/graphql/types/codegen";
 
 type State = {
     user: AuthenticatedUser | undefined;

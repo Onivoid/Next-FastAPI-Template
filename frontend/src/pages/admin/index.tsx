@@ -2,9 +2,11 @@ import Head from "next/head";
 import Style from "@/styles/pages/admin/Admin.module.scss";
 import { useEffect, useState } from "react";
 import LoginComponent from "@/components/admin/login";
+import { Notifications } from "@/components/notifications";
 
 export default function Admin() {
     const pageTitle = process.env.NEXT_PUBLIC_APP_NAME;
+    const [notifications, setNotifications] = useState<{message: string, type: string}[]>([]);
     return (
         <>
             <Head>
@@ -16,8 +18,9 @@ export default function Admin() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <Notifications notifications={notifications}/>
             <div className={Style.container}>
-                <LoginComponent />
+                <LoginComponent setNotifications={setNotifications}/>
             </div>
         </>
     );

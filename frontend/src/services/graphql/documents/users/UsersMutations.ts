@@ -6,8 +6,8 @@ export const LOGIN = gql`
             ... on AuthenticatedUser {
                 discordId
                 email
-                token
                 username
+                role
             }
             ... on Error {
                 __typename
@@ -20,9 +20,11 @@ export const LOGIN = gql`
 export const REGISTER = gql`
     mutation Register($email: String!, $password: String!, $username: String!) {
         register(email: $email, password: $password, username: $username) {
-            ... on PublicUser {
-                __typename
+            ... on AuthenticatedUser {
+                discordId
+                email
                 username
+                role
             }
             ... on Error {
                 __typename

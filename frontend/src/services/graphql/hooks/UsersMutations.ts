@@ -1,59 +1,43 @@
-import * as Types from "../types/codegen";
+import * as Types from '../types/codegen';
 
-import { gql } from "@apollo/client";
-import * as Apollo from "@apollo/client";
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type LoginMutationVariables = Types.Exact<{
-    username: Types.Scalars["String"]["input"];
-    password: Types.Scalars["String"]["input"];
+  username: Types.Scalars['String']['input'];
+  password: Types.Scalars['String']['input'];
 }>;
 
-export type LoginMutation = {
-    __typename?: "Mutation";
-    login:
-        | {
-              __typename?: "AuthenticatedUser";
-              discordId?: number | null;
-              email: string;
-              token: string;
-              username: string;
-          }
-        | { __typename: "Error"; message: string };
-};
+
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'AuthenticatedUser', discordId?: number | null, email: string, username: string, role: Types.Role } | { __typename: 'Error', message: string } };
 
 export type RegisterMutationVariables = Types.Exact<{
-    email: Types.Scalars["String"]["input"];
-    password: Types.Scalars["String"]["input"];
-    username: Types.Scalars["String"]["input"];
+  email: Types.Scalars['String']['input'];
+  password: Types.Scalars['String']['input'];
+  username: Types.Scalars['String']['input'];
 }>;
 
-export type RegisterMutation = {
-    __typename?: "Mutation";
-    register:
-        | { __typename: "Error"; message: string }
-        | { __typename: "PublicUser"; username: string };
-};
+
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'AuthenticatedUser', discordId?: number | null, email: string, username: string, role: Types.Role } | { __typename: 'Error', message: string } };
+
 
 export const LoginDocument = gql`
     mutation Login($username: String!, $password: String!) {
-        login(username: $username, password: $password) {
-            ... on AuthenticatedUser {
-                discordId
-                email
-                token
-                username
-            }
-            ... on Error {
-                __typename
-                message
-            }
-        }
+  login(username: $username, password: $password) {
+    ... on AuthenticatedUser {
+      discordId
+      email
+      username
+      role
     }
-`;
-export type LoginMutationFn = Apollo.MutationFunction<
-    LoginMutation,
-    LoginMutationVariables
->;
+    ... on Error {
+      __typename
+      message
+    }
+  }
+}
+    `;
+export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**
  * __useLoginMutation__
@@ -73,42 +57,30 @@ export type LoginMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useLoginMutation(
-    baseOptions?: Apollo.MutationHookOptions<
-        LoginMutation,
-        LoginMutationVariables
-    >,
-) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useMutation<LoginMutation, LoginMutationVariables>(
-        LoginDocument,
-        options,
-    );
-}
+export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
+      }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
-export type LoginMutationOptions = Apollo.BaseMutationOptions<
-    LoginMutation,
-    LoginMutationVariables
->;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const RegisterDocument = gql`
     mutation Register($email: String!, $password: String!, $username: String!) {
-        register(email: $email, password: $password, username: $username) {
-            ... on PublicUser {
-                __typename
-                username
-            }
-            ... on Error {
-                __typename
-                message
-            }
-        }
+  register(email: $email, password: $password, username: $username) {
+    ... on AuthenticatedUser {
+      discordId
+      email
+      username
+      role
     }
-`;
-export type RegisterMutationFn = Apollo.MutationFunction<
-    RegisterMutation,
-    RegisterMutationVariables
->;
+    ... on Error {
+      __typename
+      message
+    }
+  }
+}
+    `;
+export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
 
 /**
  * __useRegisterMutation__
@@ -129,21 +101,10 @@ export type RegisterMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useRegisterMutation(
-    baseOptions?: Apollo.MutationHookOptions<
-        RegisterMutation,
-        RegisterMutationVariables
-    >,
-) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(
-        RegisterDocument,
-        options,
-    );
-}
+export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+      }
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
-export type RegisterMutationOptions = Apollo.BaseMutationOptions<
-    RegisterMutation,
-    RegisterMutationVariables
->;
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
