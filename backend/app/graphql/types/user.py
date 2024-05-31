@@ -26,6 +26,7 @@ class PublicUser:
 
 @strawberry.type
 class AuthenticatedUser:
+    id: str
     username: str
     email: str
     discord_id: Optional[int]

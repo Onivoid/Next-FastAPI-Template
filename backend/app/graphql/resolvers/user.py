@@ -49,6 +49,7 @@ class Mutation:
             )
             info.context["response"].set_cookie(key="token", value=token)
             return AuthenticatedUser(
+                id=user.id,
                 username=user.username,
                 discord_id=user.discord_id,
                 email=user.email,
@@ -77,6 +78,7 @@ class Mutation:
                 )
                 info.context["response"].set_cookie(key="token", value=token)
                 return AuthenticatedUser(
+                    id=user.id,
                     username=user.username,
                     discord_id=user.discord_id,
                     email=user.email,
@@ -105,6 +107,7 @@ class Query:
         try:
             user = await UserModel.get(id=user_id)
             return AuthenticatedUser(
+                id=user.id,
                 username=user.username,
                 email=user.email,
                 discord_id=user.discord_id,
