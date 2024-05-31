@@ -6,6 +6,7 @@ import { Notifications } from "@/components/notifications";
 import { useStore } from "@/services/global/store";
 import useLoginPersistance from "@/services/auth/loginPersistance";
 import LoadingComponent from "@/components/loading";
+import { useLogoutMutation } from "@/services/graphql/hooks/UsersMutations";
 
 export default function Admin() {
     const pageTitle = process.env.NEXT_PUBLIC_APP_NAME;
@@ -15,6 +16,7 @@ export default function Admin() {
     const user = useStore((state) => state.user);
     const [isLoading, setIsLoading] = useState<boolean>(user === undefined);
     useLoginPersistance(isLoading, setIsLoading);
+    const [logoutMutation] = useLogoutMutation();
     return (
         <>
             <Head>
@@ -36,6 +38,7 @@ export default function Admin() {
                         <button
                             onClick={() => {
                                 useStore.setState({ user: undefined });
+                                logoutMutation();
                                 localStorage.removeItem("user");
                             }}
                         >

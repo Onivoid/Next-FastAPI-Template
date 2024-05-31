@@ -55,6 +55,7 @@ export type Error = {
 export type Mutation = {
     __typename?: "Mutation";
     login: AuthenticatedUserError;
+    logout: Scalars["Boolean"]["output"];
     register: AuthenticatedUserError;
 };
 
