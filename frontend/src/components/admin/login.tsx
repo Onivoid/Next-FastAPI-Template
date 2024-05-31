@@ -7,6 +7,7 @@ import {
 } from "@/services/graphql/types/codegen";
 import { useLoginMutation } from "@/services/graphql/hooks/UsersMutations";
 import { useStore } from "@/services/global/store";
+import LoginPersistance from "@/services/auth/loginPersistance";
 
 export default function LoginComponent({
     setNotifications,
@@ -16,6 +17,7 @@ export default function LoginComponent({
     ) => void;
 }) {
     const [loginMutation, { data, loading, error }] = useLoginMutation();
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
@@ -36,6 +38,7 @@ export default function LoginComponent({
             return;
         } else {
             let userData = data.login as AuthenticatedUser;
+            localStorage.setItem("user", JSON.stringify(userData));
             if (userData.role !== "ADMIN") {
                 setNotifications([
                     {
