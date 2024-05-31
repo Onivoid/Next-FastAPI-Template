@@ -88,7 +88,7 @@ class Mutation:
                 return Error(message="Invalid password")
         except DoesNotExist:
             return Error(message="User not found")
-        
+
     @strawberry.field
     async def logout(self, info: strawberry.private) -> bool:
         info.context["response"].delete_cookie("token")
