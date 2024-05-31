@@ -13,6 +13,7 @@ export type LoginMutation = {
     login:
         | {
               __typename?: "AuthenticatedUser";
+              id: string;
               discordId?: number | null;
               email: string;
               username: string;
@@ -32,6 +33,7 @@ export type RegisterMutation = {
     register:
         | {
               __typename?: "AuthenticatedUser";
+              id: string;
               discordId?: number | null;
               email: string;
               username: string;
@@ -44,6 +46,7 @@ export const LoginDocument = gql`
     mutation Login($username: String!, $password: String!) {
         login(username: $username, password: $password) {
             ... on AuthenticatedUser {
+                id
                 discordId
                 email
                 username
@@ -101,6 +104,7 @@ export const RegisterDocument = gql`
     mutation Register($email: String!, $password: String!, $username: String!) {
         register(email: $email, password: $password, username: $username) {
             ... on AuthenticatedUser {
+                id
                 discordId
                 email
                 username

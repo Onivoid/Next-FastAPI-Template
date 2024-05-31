@@ -40,6 +40,7 @@ export type AuthenticatedUser = {
     __typename?: "AuthenticatedUser";
     discordId?: Maybe<Scalars["Int"]["output"]>;
     email: Scalars["String"]["output"];
+    id: Scalars["String"]["output"];
     role: Role;
     username: Scalars["String"]["output"];
 };

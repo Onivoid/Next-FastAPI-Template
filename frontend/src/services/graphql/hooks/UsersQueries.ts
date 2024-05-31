@@ -33,6 +33,7 @@ export type GetMeQuery = {
     me:
         | {
               __typename?: "AuthenticatedUser";
+              id: string;
               discordId?: number | null;
               email: string;
               username: string;
@@ -245,6 +246,7 @@ export const GetMeDocument = gql`
     query GetMe {
         me {
             ... on AuthenticatedUser {
+                id
                 discordId
                 email
                 username

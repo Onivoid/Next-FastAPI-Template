@@ -36,6 +36,7 @@ export const GET_ME = gql`
     query GetMe {
         me {
             ... on AuthenticatedUser {
+                id
                 discordId
                 email
                 username
